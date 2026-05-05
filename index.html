@@ -187,11 +187,45 @@
             <section id="lesson-3-4" class="lesson-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 scroll-mt-28">
                 <header class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
                     <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="aperture" class="w-6 h-6"></i></div>
-                    <h2 class="text-2xl font-bold text-slate-800">3.4 球面地球中的地震波 (Spherical Earth)</h2>
+                    <h2 class="text-2xl font-bold text-slate-800">3.4 球面地球中的地震波 (Seismic Waves in a Spherical Earth)</h2>
                 </header>
                 <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4">
-                    <p>當觀測距離增加時，必須考慮地球的球面幾何與深度造成的速度變化。</p>
-                </div>
+                    <p>當地震波傳播跨越數千公里時，地球的曲率與內部層狀的速度結構將主導射線路徑。我們必須引入球面座標下的物理量。</p>
+                    
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-100 flex flex-col md:flex-row gap-6 items-center">
+                        <div class="flex-1">
+                            <h4 class="font-bold text-blue-800 mb-2 underline decoration-blue-200">射線參數 (Ray Parameter, $p$)</h4>
+                            <p class="text-sm">在球形地球模型中，根據 Snell's Law 的球面修正版：</p>
+                            <div class="text-xl my-4 font-serif text-center bg-white p-3 rounded shadow-sm border border-blue-50">
+                                $p = \frac{r \sin i}{v}$
+                            </div>
+                            <ul class="list-disc pl-5 text-sm space-y-1">
+                                <li>$r$：距地心的半徑。</li>
+                                <li>$i$：射線與法線的夾角（入射角）。</li>
+                                <li>$v$：該深度的地震波速。</li>
+                            </ul>
+                        </div>
+                        <div class="w-full md:w-1/2">
+                            <img src="fig3.6-1.png" alt="球面幾何射線定義" class="rounded-lg shadow-md">
+                            <p class="text-[10px] text-center mt-2 text-slate-400">圖 3.4-1：球面地球射線幾何與 $p$ 參數之定義</p>
+                        </div>
+                    </div>
+
+                    <h4 class="font-bold text-slate-800 mt-6">速度梯度與走時特徵</h4>
+                    <div class="grid md:grid-cols-2 gap-6 items-start">
+                        <div class="space-y-3">
+                            <p class="text-sm">速度隨深度的變化會直接反映在走時曲線（T-Δ 圖）的形狀上：</p>
+                            <div class="p-3 bg-red-50 rounded-lg text-xs border border-red-100">
+                                <strong>1. 三支波 (Triplication)：</strong> 當速度急劇增加（如 410km 相變面），同一距離會出現三條射線。
+                            </div>
+                            <div class="p-3 bg-indigo-50 rounded-lg text-xs border border-indigo-100">
+                                <strong>2. 陰影帶 (Shadow Zone)：</strong> 遇到低速層 (LVZ) 時，射線向內偏折，地表特定範圍收不到波。
+                            </div>
+                        </div>
+                        <div>
+                            <img src="fig3.6-7.png" alt="速度梯度影響" class="rounded-lg shadow-md">
+                            <p class="text-[10px] text-center mt-2 text-slate-400">圖 3.4-2：速度梯度劇變與低速層導致的走時異常</p>
+                        </div>
 
                 <div class="mt-8 bg-blue-50/50 rounded-xl p-6 border border-blue-100">
                     <h3 class="text-lg font-bold text-blue-800 mb-4 flex items-center gap-2">
