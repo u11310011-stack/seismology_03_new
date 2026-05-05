@@ -57,7 +57,6 @@
 </head>
 <body class="min-h-screen text-slate-800 flex flex-col relative">
 
-    <!-- 頂部導航列 -->
     <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-3">
             <i data-lucide="book-open" class="w-8 h-8 text-blue-600"></i>
@@ -68,10 +67,8 @@
         </div>
     </header>
 
-    <!-- 內容區塊 -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col lg:flex-row gap-8 w-full">
         
-        <!-- 左側導航 (Sidebar) -->
         <aside class="lg:w-1/4 flex-shrink-0 hidden lg:block">
             <div class="sticky top-28 bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
                 <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 px-3 flex items-center gap-2">
@@ -106,10 +103,8 @@
             </div>
         </aside>
 
-        <!-- 右側主要課程內容 -->
         <main class="lg:w-3/4 space-y-8 pb-32">
             
-            <!-- 3.1 導論 -->
             <section id="lesson-3-1" class="lesson-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 scroll-mt-28">
                 <header class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
                     <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="info" class="w-6 h-6"></i></div>
@@ -131,7 +126,6 @@
                 </div>
             </section>
 
-            <!-- 3.2 折射地震學 -->
             <section id="lesson-3-2" class="lesson-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 scroll-mt-28">
                 <header class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
                     <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="waves" class="w-6 h-6"></i></div>
@@ -146,7 +140,6 @@
                     </ul>
                 </div>
 
-                <!-- 大師進階 Q&A 區塊 -->
                 <div class="mt-8 bg-blue-50/50 rounded-xl p-6 border border-blue-100">
                     <h3 class="text-lg font-bold text-blue-800 mb-4 flex items-center gap-2">
                         <i data-lucide="graduation-cap" class="w-5 h-5"></i> 🧑‍🏫 大師進階 Q&A
@@ -176,7 +169,6 @@
                 </div>
             </section>
 
-            <!-- 3.3 反射地震學 -->
             <section id="lesson-3-3" class="lesson-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 scroll-mt-28">
                 <header class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
                     <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="radar" class="w-6 h-6"></i></div>
@@ -192,7 +184,6 @@
                 </div>
             </section>
 
-            <!-- 3.4 球面地球中的地震波 -->
             <section id="lesson-3-4" class="lesson-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 scroll-mt-28">
                 <header class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
                     <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="aperture" class="w-6 h-6"></i></div>
@@ -202,7 +193,6 @@
                     <p>當觀測距離增加時，必須考慮地球的球面幾何與深度造成的速度變化。</p>
                 </div>
 
-                <!-- 大師進階 Q&A 區塊 -->
                 <div class="mt-8 bg-blue-50/50 rounded-xl p-6 border border-blue-100">
                     <h3 class="text-lg font-bold text-blue-800 mb-4 flex items-center gap-2">
                         <i data-lucide="graduation-cap" class="w-5 h-5"></i> 🧑‍🏫 大師進階 Q&A
@@ -233,7 +223,6 @@
                 </div>
             </section>
 
-            <!-- 3.5 體波走時研究 -->
             <section id="lesson-3-5" class="lesson-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 scroll-mt-28">
                 <header class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
                     <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="globe-2" class="w-6 h-6"></i></div>
@@ -243,7 +232,6 @@
                     <p>將理論應用於全球尺度，建立了地球內部的基本分層模型（如 Jeffreys-Bullen 與 IASP91 模型）。</p>
                 </div>
 
-                <!-- 大師進階 Q&A 區塊 -->
                 <div class="mt-8 bg-blue-50/50 rounded-xl p-6 border border-blue-100">
                     <h3 class="text-lg font-bold text-blue-800 mb-4 flex items-center gap-2">
                         <i data-lucide="graduation-cap" class="w-5 h-5"></i> 🧑‍🏫 大師進階 Q&A
@@ -292,14 +280,12 @@
                 </div>
             </section>
 
-            <!-- 3.6 地球各向異性構造 -->
             <section id="lesson-3-6" class="lesson-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 scroll-mt-28">
                 <header class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
                     <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="compass" class="w-6 h-6"></i></div>
                     <h2 class="text-2xl font-bold text-slate-800">3.6 地球各向異性構造 (Anisotropic Structure)</h2>
                 </header>
 
-                <!-- 大師進階 Q&A 區塊 -->
                 <div class="mt-4 bg-blue-50/50 rounded-xl p-6 border border-blue-100">
                     <h3 class="text-lg font-bold text-blue-800 mb-4 flex items-center gap-2">
                         <i data-lucide="graduation-cap" class="w-5 h-5"></i> 🧑‍🏫 大師進階 Q&A
@@ -325,6 +311,10 @@
                         </div>
                         <div class="qa-block p-4 rounded-r-lg shadow-sm">
                             <h4 class="font-bold text-slate-800 text-sm">Q15. 解釋圖 3.6-1 與 3.6-7</h4>
+                            <div class="my-4 flex flex-col gap-4 items-center">
+                                <img src="fig3.6-1.png" alt="圖 3.6-1 剪力波分離示意圖" class="rounded-lg shadow-sm border border-slate-200 max-w-full">
+                                <img src="fig3.6-7.png" alt="圖 3.6-7 剪力波分離與各向異性" class="rounded-lg shadow-sm border border-slate-200 max-w-full">
+                            </div>
                             <p class="text-sm text-slate-600 mt-2 leading-relaxed">
                                 <strong>圖 3.6-1 (剪力波分離示意圖)：</strong> 顯示了一個初始偏振的 S 波，在進入各向異性區域後，分裂成互相垂直的快波 (S1) 與慢波 (S2)，且兩者之間產生了時間延遲。<br>
                                 <strong>圖 3.6-7 (各向異性分布)：</strong> 通常展示的是測站觀測到的剪力波「快波偏振方向」。這些線段的方向，往往與地表板塊的運動方向，或是地函內部的熱對流流動方向高度一致！
@@ -334,15 +324,16 @@
                 </div>
             </section>
 
-            <!-- 3.7 衰減與不彈性 -->
             <section id="lesson-3-7" class="lesson-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 scroll-mt-28">
                 <header class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
                     <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="trending-down" class="w-6 h-6"></i></div>
                     <h2 class="text-2xl font-bold text-slate-800">3.7 衰減與不彈性 (Attenuation & Anelasticity)</h2>
                 </header>
+                <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4">
+                    <p>真實的地球並不是完美的彈性體。當地震波傳遞時，其能量會因為幾何擴展、散射或轉化為熱能而逐漸減弱，探討這些衰減特性可以幫助我們了解地殼與地函的熱狀態及流體分布。</p>
+                </div>
 
-                <!-- 大師進階 Q&A 區塊 -->
-                <div class="mt-4 bg-blue-50/50 rounded-xl p-6 border border-blue-100">
+                <div class="mt-8 bg-blue-50/50 rounded-xl p-6 border border-blue-100">
                     <h3 class="text-lg font-bold text-blue-800 mb-4 flex items-center gap-2">
                         <i data-lucide="graduation-cap" class="w-5 h-5"></i> 🧑‍🏫 大師進階 Q&A 與圖表解析
                     </h3>
@@ -350,8 +341,70 @@
                         <div class="qa-block p-4 rounded-r-lg shadow-sm">
                             <h4 class="font-bold text-slate-800 text-sm">Q16. 波傳遞時能量如何衰減？</h4>
                             <p class="text-sm text-slate-600 mt-2 leading-relaxed">
-                                主要有四大過程：<br>
-                                1. <strong>幾何擴散 (Geometric spreading)</strong>：能量如漣漪般隨球面積變大而被稀釋。<br>
-                                2. <strong>散射 (Scattering)</strong>：遇到岩層不均勻體，波被彈向四面八方。<br>
-                                3. <strong>多路徑 (Multipathing)</strong>：能量被分散到不同路徑。<br>
-                                4. <strong>本徵衰減 (Intrinsic anelasticity)</strong>：最核心的物理衰減，由於岩石不是完美的彈性體，內部晶粒摩擦會把地震的「機械能」永久轉化為「熱能」。我們用品質因子 $Q$ 來描述它（Q越
+                                地震波在地球內部傳播時，能量衰減主要來自三個機制：<br>
+                                <strong>1. 幾何擴散 (Geometrical Spreading)：</strong> 就像水池裡的水波紋向外擴散，波前（Wavefront）面積越來越大，單位面積所分配到的能量自然就變弱了。<br>
+                                <strong>2. 散射 (Scattering)：</strong> 當地震波遇到地下不均勻的構造（如斷層帶、岩層碎裂帶）時，部分能量會朝著四面八方反射或折射而分散掉。<br>
+                                <strong>3. 本質衰減/不彈性吸收 (Intrinsic Attenuation / Anelasticity)：</strong> 因為地球岩石並非完美彈性體，當波通過時，岩石顆粒間的微小摩擦或部分熔融體的黏滯性，會將地震波的力學動能轉換為「熱能」而消耗掉。科學家用「品質因數 (Q值)」來描述，Q值越大代表衰減越少、越接近完美彈性。
+                            </p>
+                        </div>
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q17. 解釋圖 3.7-1：區域性的衰減差異</h4>
+                            <div class="my-4 flex justify-center">
+                                <img src="fig3.7-1.png" alt="圖 3.7-1 區域性衰減差異" class="rounded-lg shadow-sm border border-slate-200 max-w-full md:max-w-xl">
+                            </div>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                此圖展示了 1995 年發生在德州的同一個地震，分別在內華達州 (MNV) 與密蘇里州 (MM18) 測站所記錄到的地震波形對比。<br>
+                                雖然兩個測站距離震央的距離差不多（Δ 約 14~15 度），但波形特徵截然不同：<br>
+                                <strong>上方 MNV 測站 (內華達)：</strong> 高頻能量明顯衰減消失，波形顯得平緩。這是因為地震波穿過了美國西部「構造活躍、地溫較高」的區域，衰減效應非常強（低 Q 值）。<br>
+                                <strong>下方 MM18 測站 (密蘇里)：</strong> 保留了極多高頻且劇烈震盪的能量。因為地震波穿過了美國中部「穩定古老的大陸地盾 (Craton)」，岩石冰冷堅固，衰減效應極弱（高 Q 值）。
+                            </p>
+                        </div>
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q18. 解釋圖 3.7-5：速度不均勻對波幅的「透鏡」效應</h4>
+                            <div class="my-4 flex justify-center">
+                                <img src="fig3.7-5.png" alt="圖 3.7-5 透鏡效應與焦散線" class="rounded-lg shadow-sm border border-slate-200 max-w-full md:max-w-xl">
+                            </div>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                此圖展示了地下速度的不均勻構造如何像「透鏡」一樣影響地震波的振幅大小。<br>
+                                當左側平行的平面波穿過厚度變化或速度不同的地層時，射線路徑會發生偏折與聚焦：<br>
+                                <strong>射線發散區：</strong> 射線間隔變寬（波束散開），該區域接收到的振幅就會大幅降低（如圖右側低平的訊號）。<br>
+                                <strong>射線聚焦區：</strong> 射線密集甚至交會重疊（物理上稱為焦散線 Caustics），會導致極高的能量聚集（如圖右側突出的尖峰振幅）。這就是為什麼有時候同一個地震，某些局部的災情會因為地下構造聚焦而特別嚴重。
+                            </p>
+                        </div>
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q19. 解釋圖 3.7-10：地球與月球的地震圖對比</h4>
+                            <div class="my-4 flex justify-center">
+                                <img src="fig3.7-10.png" alt="圖 3.7-10 地球與月球地震圖比較" class="rounded-lg shadow-sm border border-slate-200 max-w-full md:max-w-xl">
+                            </div>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                這是一組非常經典且極端的對比圖！<br>
+                                <strong>上方（地球）：</strong> 在距離 183 公里的測站，地震波的能量很快就平息了。因為地球內部含有水分且地溫較高，具有很強的「本質衰減」將波能消耗掉。<br>
+                                <strong>下方（月球）：</strong> 阿波羅 12 號測站錄下 147 公里外火箭推進器撞擊的震動，訊號竟然持續了一個多小時！這是因為月球表面是一層極度乾燥的風化碎屑層 (Regolith)。沒有液態水代表幾乎沒有本質衰減（極高 Q 值），而破碎的岩層導致地震波在裡面瘋狂地<strong>反射與散射 (Intense scattering)</strong>。<br>
+                                <strong>大師類比：</strong> 月球就像是一個由堅硬金屬打造、完美隔音的空房間，在裡面敲一下鐘，聲音（波）無法被吸收，只能不斷撞擊牆壁產生無窮無盡的迴音！
+                            </p>
+                        </div>
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q20. 解釋圖 3.7-18：美國本土 Q_Lg 分布圖</h4>
+                            <div class="my-4 flex justify-center">
+                                <img src="fig3.7-18.png" alt="圖 3.7-18 美國 Q_Lg 分布圖" class="rounded-lg shadow-sm border border-slate-200 max-w-full md:max-w-2xl">
+                            </div>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                此圖呈現了美國本土 1 Hz Lg 波段的「品質因數 (Q值)」空間分布。Q值直接反映了地殼吸收地震波能量的程度（Q值越小，衰減越強）：<br>
+                                <strong>美國西部（圖左，大圓圈標示區域）：</strong> Q值非常低（約 200-400），表示地震波衰減快速。因為西部屬於板塊交界帶，伴隨造山運動與火山作用，地殼溫度高且可能有部分熔融，強烈吸收波能。<br>
+                                <strong>美國東部與中部（圖右，十字型標示區域）：</strong> Q值很高（約 500-700 以上），表示地震波可以傳遞得很遠而不易衰減。因為該區是古老的穩定大陸板塊，岩層冰冷且緻密。<br>
+                                這張地圖完美解釋了前面 Q17 (圖 3.7-1) 所看到的現象，並證實了「地質構造活躍度」與「地震波衰減特性」息息相關。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    
+    <script>
+        // 啟用 Lucide Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
