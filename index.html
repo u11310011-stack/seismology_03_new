@@ -47,6 +47,12 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
+        
+        /* Q&A Accordion Style */
+        .qa-block {
+            border-left: 3px solid #3b82f6;
+            background: #ffffff;
+        }
     </style>
 </head>
 <body class="min-h-screen text-slate-800 flex flex-col relative">
@@ -135,18 +141,38 @@
                     <p>此單元介紹了測定地下深處速度的最簡單方法，將地球視為平坦且波速均勻的層狀模型。</p>
                     <ul class="list-disc pl-5 space-y-2">
                         <li><strong>平層法：</strong> 透過分析直接波、反射波與頭波 (Head wave) 的走時曲線，反推地層的速度與厚度。</li>
-                        <li><strong>莫氏不連續面 (Moho)：</strong> 1909 年莫氏透過觀測到兩組不同的 P 波（Pg 和 Pn），發現了地殼與地函的邊界。</li>
                         <li><strong>傾斜界面：</strong> 當界面不水平時，需使用逆向測線 (Reversed profile) 來修正視速度，求得真實傾角與深度。</li>
                         <li><strong>波長與解析度：</strong> 地震波只能「看見」大於其波長的構造，解析度取決於觀測頻率。</li>
                     </ul>
                 </div>
-                <div class="mt-6 bg-orange-50 border border-orange-100 rounded-xl p-5 relative overflow-hidden">
-                    <i data-lucide="lightbulb" class="absolute right-4 top-4 w-24 h-24 text-orange-500 opacity-10"></i>
-                    <h4 class="font-bold text-orange-700 flex items-center gap-2 mb-2"><i data-lucide="sparkles" class="w-5 h-5"></i> 大師的生活類比</h4>
-                    <p class="text-sm text-orange-800 leading-relaxed relative z-10">
-                        <strong>折射與頭波：</strong> 想像你在沙灘上跑步（波速慢），然後斜斜跑上堅硬的柏油路（波速快）。踩上柏油路的那一刻你的速度變快了，這使得你的方向發生偏折，這就是折射。<br>
-                        <strong>波長解析度：</strong> 波長就像探測地形的「腳掌大小」。如果你的腳掌非常巨大（波長長、低頻率），你踩過去根本感覺不到地上的小裂縫（無法解析細微構造）！
-                    </p>
+
+                <!-- 大師進階 Q&A 區塊 -->
+                <div class="mt-8 bg-blue-50/50 rounded-xl p-6 border border-blue-100">
+                    <h3 class="text-lg font-bold text-blue-800 mb-4 flex items-center gap-2">
+                        <i data-lucide="graduation-cap" class="w-5 h-5"></i> 🧑‍🏫 大師進階 Q&A
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q1. Pg、Pn、PmP 是什麼？</h4>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                <strong>Pg</strong> 是在地殼內部直接傳播的 P 波 (直達波)。<br>
+                                <strong>Pn</strong> 是當入射角達到臨界角時，沿著地殼與地函邊界 (Moho面) 滑行的「頭波 (Head wave)」。<br>
+                                <strong>PmP</strong> 則是碰到 Moho 面後直接「反射」回地表的 P 波。
+                            </p>
+                        </div>
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q2. 如何發現 Moho 面？</h4>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                1909年，克羅埃西亞科學家莫荷洛維奇 (Mohorovičić) 在分析地震紀錄時，發現當測站距離震央超過某個距離後，第一個到達的地震波不再是地殼內的直達波 (Pg)，而是從更深處「抄捷徑」過來的波 (Pn)。這證明了地下深處必定存在一個<strong>波速突然大增的界面</strong>，也就是我們現在所稱的莫氏不連續面 (Moho)。
+                            </p>
+                        </div>
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q3. 全球 Moho 面的深度分布為何？</h4>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                全球 Moho 面深度並不均勻，平均約 33 公里。<strong>海洋地殼非常薄</strong>，Moho 面深度大約只有 6 到 8 公里；而<strong>大陸地殼較厚</strong>，平均約 30 到 50 公里，在造山帶（例如西藏高原或安地斯山脈）下方甚至可以深達 70 公里以上，這就是所謂的「山根」效應。
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -161,18 +187,8 @@
                     <ul class="list-disc pl-5 space-y-2">
                         <li><strong>走時曲線與 Dix 方程式：</strong> 反射波走時呈雙曲線。可利用各層的均方根 (rms) 速度求得每一層的層速度 (Interval velocity)。</li>
                         <li><strong>共同中點 (CMP) 疊加：</strong> 透過將相同中點的紀錄進行 NMO (正常時差) 修正後相加，能大幅增強反射訊號並消除雜訊。</li>
-                        <li><strong>訊號處理：</strong> 包含靜態修正、去捲積 (提升時間解析度) 及 f-k 過濾等分離技術。</li>
                         <li><strong>遷移 (Migration)：</strong> 消除衍射偽像（如「蝴蝶結」狀構造），將反射面歸位到真實地理位置。</li>
                     </ul>
-                </div>
-                <div class="mt-6 bg-orange-50 border border-orange-100 rounded-xl p-5 relative overflow-hidden">
-                    <i data-lucide="lightbulb" class="absolute right-4 top-4 w-24 h-24 text-orange-500 opacity-10"></i>
-                    <h4 class="font-bold text-orange-700 flex items-center gap-2 mb-2"><i data-lucide="sparkles" class="w-5 h-5"></i> 大師的生活類比</h4>
-                    <p class="text-sm text-orange-800 leading-relaxed relative z-10">
-                        如果你在複雜的大峽谷大喊，會聽到四面八方傳來雜亂的「回音」。<br>
-                        <strong>CMP 疊加</strong> 就像是放了幾十個麥克風一起錄音，然後把雜音抵銷，只留下最清楚的主旋律。<br>
-                        <strong>遷移 (Migration)</strong> 則像是幫地震資料戴上「矯正眼鏡」，把因為凹凸不平而變形的「蝴蝶結狀雜訊」，重新還原成真正筆直的地下斷層面！
-                    </p>
                 </div>
             </section>
 
@@ -184,20 +200,36 @@
                 </header>
                 <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4">
                     <p>當觀測距離增加時，必須考慮地球的球面幾何與深度造成的速度變化。</p>
-                    <ul class="list-disc pl-5 space-y-2">
-                        <li><strong>射線參數 (p)：</strong> 在球形模型中定義為 <code>p = (r sin i) / v</code>，這在射線路徑中是一個常數。</li>
-                        <li><strong>速度劇烈增加：</strong> 會產生<strong>三支波 (Triplication)</strong> 現象，即同一個距離會先後觀測到三個到達波。</li>
-                        <li><strong>低速帶 (LVZ)：</strong> 速度反常下降會導致波路徑大幅彎折，在地表形成觀測不到直接射線的<strong>陰影帶 (Shadow zone)</strong>。</li>
-                        <li><strong>反演：</strong> 使用 Herglotz-Wiechert 積分，直接由走時曲線推算地球深度的速度分布。</li>
-                    </ul>
                 </div>
-                <div class="mt-6 bg-orange-50 border border-orange-100 rounded-xl p-5 relative overflow-hidden">
-                    <i data-lucide="lightbulb" class="absolute right-4 top-4 w-24 h-24 text-orange-500 opacity-10"></i>
-                    <h4 class="font-bold text-orange-700 flex items-center gap-2 mb-2"><i data-lucide="sparkles" class="w-5 h-5"></i> 大師的生活類比</h4>
-                    <p class="text-sm text-orange-800 leading-relaxed relative z-10">
-                        想像地球是一顆「越靠近中心越硬」的巨大果凍。光線在果凍中穿梭時，會被內部堅硬（高波速）的地方「排斥」，導致射線呈現一個美麗的「U型彎曲」回到地表。<br>
-                        如果果凍中間突然有一層特別軟（低速帶），光線就會在那裡發生大轉彎，導致地表某個區域完全陷入「黑暗（陰影帶）」，什麼訊號都收不到！
-                    </p>
+
+                <!-- 大師進階 Q&A 區塊 -->
+                <div class="mt-8 bg-blue-50/50 rounded-xl p-6 border border-blue-100">
+                    <h3 class="text-lg font-bold text-blue-800 mb-4 flex items-center gap-2">
+                        <i data-lucide="graduation-cap" class="w-5 h-5"></i> 🧑‍🏫 大師進階 Q&A
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q4. 甚麼是 Ray parameter (射線參數)？</h4>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                在球面地球中，根據斯涅爾定律 (Snell's law)，射線參數定義為 <strong>p = (r × sin i) / v</strong>（r是距地心半徑，i是入射角，v是波速）。<br>
+                                最重要的是：<strong>對於同一條地震射線，p 值從頭到尾都是常數！</strong> 這個常數就像是這條射線的「身分證」，它決定了這條波會彎曲到什麼程度，以及它能穿透到地球的哪一個最深點 (Turning point)。
+                            </p>
+                        </div>
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q5. 為何地震波遇到「高速帶」，測站會收到多次到時 (Triplication)？</h4>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                當深度增加，波速發生「劇烈增加」時（例如地函 410 公里與 660 公里的礦物相變帶），地震波會被強烈地折射回地表。<br>
+                                <strong>大師類比：</strong> 這就像你在賽車場的不同彎道超車。有些波走淺層慢速路徑，有些波大角度潛入深層高速帶再衝上來，導致「不同出發角度的波，最後卻在同一個距離的測站交會」。結果就是，同一個測站會先後記錄到三個不同路徑的 P 波（稱為 Triplication 三支波現象）。
+                            </p>
+                        </div>
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q6. 為何地震波遇到「低速帶」，測站會收不到波 (Shadow Zone)？</h4>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                根據斯涅爾定律，當地震波從高速層進入低速帶 (LVZ) 時，射線會「向下急彎」（偏向法線）。<br>
+                                這會導致原本應該均勻分布回到地表的波束，在某個範圍內被強制拉扯向深處，使得地表形成一個收不到任何直達波的空白區域，這就是所謂的<strong>陰影帶 (Shadow Zone)</strong>。
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -209,19 +241,54 @@
                 </header>
                 <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4">
                     <p>將理論應用於全球尺度，建立了地球內部的基本分層模型（如 Jeffreys-Bullen 與 IASP91 模型）。</p>
-                    <ul class="list-disc pl-5 space-y-2">
-                        <li><strong>相命名：</strong> 根據經過的路徑給予字母標籤，如 P、S、K（外核）、I（內核）、c（核函界面反射）、i（內外核界面反射）。</li>
-                        <li><strong>核心相 (Core phases)：</strong> 液態外核導致了著名的 <strong>P 波陰影帶 (98° 至 145°)</strong>，而 PKP、PKIKP 等核心波則揭示了內核的存在。</li>
-                        <li><strong>地函構造：</strong> 410 與 660 公里的不連續面產生明顯三支波。地函底部的 D" 區域是個複雜的熱邊界層。</li>
-                    </ul>
                 </div>
-                <div class="mt-6 bg-orange-50 border border-orange-100 rounded-xl p-5 relative overflow-hidden">
-                    <i data-lucide="lightbulb" class="absolute right-4 top-4 w-24 h-24 text-orange-500 opacity-10"></i>
-                    <h4 class="font-bold text-orange-700 flex items-center gap-2 mb-2"><i data-lucide="sparkles" class="w-5 h-5"></i> 大師的生活類比</h4>
-                    <p class="text-sm text-orange-800 leading-relaxed relative z-10">
-                        這些英文字母（P, S, K, c）就像是地震波的<strong>「旅行轉運標籤」</strong>！<br>
-                        P 和 S 是一般的陸運；K 代表包裹經過了海運（液態外核）；c 代表包裹撞到牆壁被退件（反射）。只要看一眼標籤（例如 PKIKP），地震學家就知道這個包裹穿越了整個地球的核心再回到地表，經歷了一場偉大的旅程！
-                    </p>
+
+                <!-- 大師進階 Q&A 區塊 -->
+                <div class="mt-8 bg-blue-50/50 rounded-xl p-6 border border-blue-100">
+                    <h3 class="text-lg font-bold text-blue-800 mb-4 flex items-center gap-2">
+                        <i data-lucide="graduation-cap" class="w-5 h-5"></i> 🧑‍🏫 大師進階 Q&A
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q7. 如何發現核幔邊界 (Core-Mantle Boundary)？</h4>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                1906年，Oldham 發現地震的 P 波在距離震央超過大約 100 度的地方，會突然「消失」形成陰影帶。他推斷地球深處有一個導致波速急遽下降的巨大核心（低速帶效應）。到了 1914 年，Gutenberg 利用地震波的走時數據，精確計算出這個核幔邊界（古氏不連續面）的深度約為 <strong>2900 公里</strong>。
+                            </p>
+                        </div>
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q8. 各種體波波相 (Phases) 介紹</h4>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                地震波路徑就像護照上的海關戳章：<br>
+                                <strong>P / S</strong>：在地函中傳播的 P 體波與 S 體波。<br>
+                                <strong>K</strong>：在外核中傳播的 P 波 (外核為液態，無 S 波)。<br>
+                                <strong>I / J</strong>：在內核中傳播的 P 波 (I) 與 S 波 (J)。<br>
+                                <strong>c / i</strong>：碰到核幔邊界反射 (c)，碰到內外核邊界反射 (i)。<br>
+                                <strong>p / s (小寫)</strong>：從震源「先向上」打到地表再彈回內部的波 (Depth phases，用來定震源深度)。
+                            </p>
+                        </div>
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q9. Core phases (地核波相) 介紹</h4>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                這些波穿越了地球的心臟！例如：<br>
+                                <strong>PKP</strong>：地函(P) -> 外核(K) -> 地函(P)。<br>
+                                <strong>PKIKP</strong>：一路貫穿到底！地函(P) -> 外核(K) -> 內核(I) -> 外核(K) -> 地函(P)。<br>
+                                <strong>SKS</strong>：地函(S) -> 入外核轉成P波(K) -> 出外核轉回S波(S)。
+                            </p>
+                        </div>
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q10. 甚麼是 Antipodal focusing (對蹠點聚焦)？</h4>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                想像地球是一個巨大的玻璃球透鏡。當地震發生時，向四面八方發散的地震波，在繞過地球或穿透地核後，會非常精準地在地球正對面 <strong>180 度的地方 (對蹠點) 完美匯聚</strong>。這會導致在距離震央最遠的對面，反而能測量到異常強烈的地震波振幅！
+                            </p>
+                        </div>
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q11. 解釋上部地函構造 (Upper mantle structure)，低速帶與高速帶的說明</h4>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                <strong>低速帶 (LVZ)</strong>：大約在深度 100~200 公里處（軟流圈），因為高溫導致岩石呈現「部分熔融 (Partial melt)」，波速在此處反常下降。<br>
+                                <strong>高速帶 (過渡帶)</strong>：在 410 公里與 660 公里深處，岩石化學成分沒變，但因為壓力極大，礦物晶格發生「相變 (Phase transition)」被擠壓得更緻密（橄欖石 -> 瓦茲利石 -> 鈣鈦礦），導致波速在這兩個深度呈現階梯式的劇烈上升。
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -231,21 +298,39 @@
                     <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="compass" class="w-6 h-6"></i></div>
                     <h2 class="text-2xl font-bold text-slate-800">3.6 地球各向異性構造 (Anisotropic Structure)</h2>
                 </header>
-                <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4">
-                    <p>探討地震波速「隨方向改變」的物理現象（各向異性）。</p>
-                    <ul class="list-disc pl-5 space-y-2">
-                        <li><strong>成因：</strong> 包括物質層狀堆疊產生的 SPO，以及礦物（如橄欖石）受地函對流應力排列產生的 LPO。</li>
-                        <li><strong>剪力波分裂 (Shear Wave Splitting)：</strong> 當剪力波進入各向異性介質時，會分裂為快、慢兩個不同時間到達的脈衝。</li>
-                        <li><strong>區域應用：</strong> 上部地函的各向異性與板塊運動方向高度相關；地函底部 D" 層與內核（鐵晶體軸向排列）也有明顯各向異性。</li>
-                    </ul>
-                </div>
-                <div class="mt-6 bg-orange-50 border border-orange-100 rounded-xl p-5 relative overflow-hidden">
-                    <i data-lucide="lightbulb" class="absolute right-4 top-4 w-24 h-24 text-orange-500 opacity-10"></i>
-                    <h4 class="font-bold text-orange-700 flex items-center gap-2 mb-2"><i data-lucide="sparkles" class="w-5 h-5"></i> 大師的生活類比</h4>
-                    <p class="text-sm text-orange-800 leading-relaxed relative z-10">
-                        這就像是在<strong>「劈木柴」</strong>！<br>
-                        如果你順著木頭的天然紋理劈下去，斧頭很容易穿過（波速快）；如果你橫向垂直紋理劈，就會非常困難（波速慢）。當一個 S 波跑進帶有紋理的岩層裡，它就會被木紋「撕裂」成一快一慢兩個波，我們稱之為剪力波分裂！
-                    </p>
+
+                <!-- 大師進階 Q&A 區塊 -->
+                <div class="mt-4 bg-blue-50/50 rounded-xl p-6 border border-blue-100">
+                    <h3 class="text-lg font-bold text-blue-800 mb-4 flex items-center gap-2">
+                        <i data-lucide="graduation-cap" class="w-5 h-5"></i> 🧑‍🏫 大師進階 Q&A
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q12. 說明各向異性 (Anisotropic earth structure)</h4>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                地球內部並不是完美的均質體。各向異性指的是<strong>「地震波速會因為傳播方向或震動方向的不同而改變」</strong>的現象。這就像是順著木頭紋理劈柴很容易（波速快），但垂直紋理劈柴就很難（波速慢）。這通常是因為地函對流導致橄欖石晶體產生定向排列 (LPO) 所引起。
+                            </p>
+                        </div>
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q13. 說明剪力波分離 (Shear Wave Splitting)？</h4>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                當一個 S 波進入帶有各向異性（有紋理）的介質時，它會被強制「拆解」成兩個互相垂直的波：一個沿著最容易震動的方向傳播（快波），另一個沿著最難震動的方向傳播（慢波）。結果測站會接收到兩組有時間差的 S 波脈衝，這就是剪力波分離。
+                            </p>
+                        </div>
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q14. 為何使用 SKS 波相研究剪力波分離？</h4>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                這是地震學家非常聰明的一招！因為外核是液態的，SKS 波進入外核時必須轉換成 P 波傳播，這會<strong>「徹底洗掉震源端 S 波的偏振特徵」</strong>。當它在核幔邊界轉回 S 波時，必然是純粹的 SV 偏振。因此，如果我們在測站觀測到 SKS 波發生了剪力波分離（出現了 SH 分量），我們就能 100% 肯定：這個各向異性絕對是發生在<strong>「測站正下方的接收端地函」</strong>，完美排除了震源路徑的干擾！
+                            </p>
+                        </div>
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q15. 解釋圖 3.6-1 與 3.6-7</h4>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                <strong>圖 3.6-1 (剪力波分離示意圖)：</strong> 顯示了一個初始偏振的 S 波，在進入各向異性區域後，分裂成互相垂直的快波 (S1) 與慢波 (S2)，且兩者之間產生了時間延遲。<br>
+                                <strong>圖 3.6-7 (各向異性分布)：</strong> 通常展示的是測站觀測到的剪力波「快波偏振方向」。這些線段的方向，往往與地表板塊的運動方向，或是地函內部的熱對流流動方向高度一致！
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -255,79 +340,18 @@
                     <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="trending-down" class="w-6 h-6"></i></div>
                     <h2 class="text-2xl font-bold text-slate-800">3.7 衰減與不彈性 (Attenuation & Anelasticity)</h2>
                 </header>
-                <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4">
-                    <p>研究地震波能量在傳播過程中是如何損耗的。</p>
-                    <ul class="list-disc pl-5 space-y-2">
-                        <li><strong>能量損耗過程：</strong> 包含彈性過程（幾何擴散、散射、多路徑）以及非彈性過程（本徵衰減，將機械能轉化為熱能）。</li>
-                        <li><strong>品質因子 (Q)：</strong> 描述介質衰減程度的指標。Q 值越小，表示衰減越強烈。</li>
-                        <li><strong>物理色散：</strong> 伴隨衰減而生，為了維持因果律，不同頻率的波會以微小差異的速度傳播。</li>
-                        <li><strong>Q 的分布：</strong> 衰減最強（低 Q）的區域通常在淺層地殼（因含有流體）以及軟流圈（因處於高溫部分熔融狀態）。</li>
-                    </ul>
-                </div>
-                <div class="mt-6 bg-orange-50 border border-orange-100 rounded-xl p-5 relative overflow-hidden">
-                    <i data-lucide="lightbulb" class="absolute right-4 top-4 w-24 h-24 text-orange-500 opacity-10"></i>
-                    <h4 class="font-bold text-orange-700 flex items-center gap-2 mb-2"><i data-lucide="sparkles" class="w-5 h-5"></i> 大師的生活類比</h4>
-                    <p class="text-sm text-orange-800 leading-relaxed relative z-10">
-                        想像你用力敲擊一個大銅鐘，聲音會慢慢消失。一部分是因為聲音散開了（幾何擴散）；另一部分是因為金屬內部原子摩擦，把聲音的能量變成了<strong>微小的熱能</strong>（本徵衰減）。<br>
-                        Q 值就像是地球的「避震器」！遇到高溫的軟流圈（Q 值很小），震動能量很快就被這層天然避震器給吸收轉化掉了。
-                    </p>
-                </div>
-            </section>
 
-            <!-- 3.8 地函與地核的成分 -->
-            <section id="lesson-3-8" class="lesson-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 scroll-mt-28">
-                <header class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
-                    <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="layers" class="w-6 h-6"></i></div>
-                    <h2 class="text-2xl font-bold text-slate-800">3.8 地函與地核的成分 (Composition)</h2>
-                </header>
-                <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4">
-                    <p>結合地震學走時資料、密度運算與高壓實驗，建立地球深部的成分與礦物模型。</p>
-                    <ul class="list-disc pl-5 space-y-2">
-                        <li><strong>密度模型：</strong> 利用 Adams-Williamson 方程式與地球轉動慣量來約束地球內部的密度分布。</li>
-                        <li><strong>地函成分：</strong> 以橄欖岩 (Pyrolite) 模型為主。410、520 與 660 公里的界線，正是橄欖石相變為瓦茲利石、林伍德石及鈣鈦礦的深度。</li>
-                        <li><strong>地核成分：</strong> 主要為鐵鎳合金。由於純鐵密度高於觀測值，推測外核混有少量輕元素（如硫、矽、氧）。</li>
-                    </ul>
-                </div>
-                <div class="mt-6 bg-orange-50 border border-orange-100 rounded-xl p-5 relative overflow-hidden">
-                    <i data-lucide="lightbulb" class="absolute right-4 top-4 w-24 h-24 text-orange-500 opacity-10"></i>
-                    <h4 class="font-bold text-orange-700 flex items-center gap-2 mb-2"><i data-lucide="sparkles" class="w-5 h-5"></i> 大師的生活類比</h4>
-                    <p class="text-sm text-orange-800 leading-relaxed relative z-10">
-                        地球就像是一杯巨大的<strong>「漸層調酒」</strong>！<br>
-                        上層的地函充滿了橄欖石，但隨著深度往下（壓力變大），同樣的成分硬生生被擠壓成了結構更緊密的形狀（這就是 410 和 660 公里的界面）。而最底下的地核，則像是在純鐵汁裡加了一點輕巧的「調味料」（硫和氧），讓它的密度比純鐵稍微輕了一點點。
-                    </p>
-                </div>
-            </section>
-
-        </main>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 初始化圖示
-            lucide.createIcons();
-            
-            // 監聽滾動以更新左側導航列的亮點狀態
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            window.addEventListener('scroll', () => {
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    // 當區塊頂部到達視窗上方約 200px 處時觸發
-                    if (scrollY >= sectionTop - 200) {
-                        current = section.getAttribute('id');
-                    }
-                });
-                
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+                <!-- 大師進階 Q&A 區塊 -->
+                <div class="mt-4 bg-blue-50/50 rounded-xl p-6 border border-blue-100">
+                    <h3 class="text-lg font-bold text-blue-800 mb-4 flex items-center gap-2">
+                        <i data-lucide="graduation-cap" class="w-5 h-5"></i> 🧑‍🏫 大師進階 Q&A 與圖表解析
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="qa-block p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-slate-800 text-sm">Q16. 波傳遞時能量如何衰減？</h4>
+                            <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                                主要有四大過程：<br>
+                                1. <strong>幾何擴散 (Geometric spreading)</strong>：能量如漣漪般隨球面積變大而被稀釋。<br>
+                                2. <strong>散射 (Scattering)</strong>：遇到岩層不均勻體，波被彈向四面八方。<br>
+                                3. <strong>多路徑 (Multipathing)</strong>：能量被分散到不同路徑。<br>
+                                4. <strong>本徵衰減 (Intrinsic anelasticity)</strong>：最核心的物理衰減，由於岩石不是完美的彈性體，內部晶粒摩擦會把地震的「機械能」永久轉化為「熱能」。我們用品質因子 $Q$ 來描述它（Q越
