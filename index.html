@@ -1,1 +1,135 @@
+import pandas as pd
+from datetime import datetime
 
+# 為了產生檔案，我將執行 Python 代碼來生成 HTML 內容
+html_content = """<!   DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地震學實驗室 - Seismology Tool</title>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@gradio/lite/dist/index.js"></script>
+    <style>
+        body {
+            background-color: #f0f2f5;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        #gradio-app {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header h1 { margin: 0; font-size: 24px; }
+        .header p { margin: 5px 0 0; opacity: 0.9; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>地震學計算工具 (Seismology Tool)</h1>
+        <p>基於 P 波與 S 波走時曲線之交互式教學網頁</p>
+    </div>
+
+    <gradio-lite>
+        <gradio-requirements>
+            numpy
+            matplotlib
+        </gradio-requirements>
+
+        <gradio-file name="app.py" entrypoint>
+import gradio as gr
+import numpy as np
+import matplotlib.pyplot as plt
+
+def calculate_travel_time(distance, v_p, v_s, depth):
+    # 簡單的走時計算模型 (考量震源深度)
+    # 斜距 (Slant distance)
+    slant_dist = np.sqrt(distance**2 + depth**2)
+    
+    t_p = slant_dist / v_p
+    t_s = slant_dist / v_s
+    t_diff = t_s - t_p
+    
+    # 繪圖
+    fig, ax = plt.subplots(figsize=(10, 6), dpi=100)
+    
+    # 設定距離範圍繪製參考線
+    distances = np.linspace(0, max(500, distance + 100), 500)
+    curve_p = np.sqrt(distances**2 + depth**2) / v_p
+    curve_s = np.sqrt(distances**2 + depth**2) / v_s
+    
+    ax.plot(distances, curve_p, label='P-wave', color='#ef4444', linewidth=2)
+    ax.plot(distances, curve_s, label='S-wave', color='#3b82f6', linewidth=2)
+    
+    # 標記目前點
+    ax.scatter([distance], [t_p], color='red', zorder=5)
+    ax.scatter([distance], [t_s], color='blue', zorder=5)
+    
+    # 標記 S-P 差值
+    ax.vlines(distance, t_p, t_s, colors='green', linestyles='dashed', label=f'S-P interval: {t_diff:.2f}s')
+    
+    ax.set_title("Travel Time Curves (走時曲線圖)", fontsize=14, fontweight='bold')
+    ax.set_xlabel("Epicentral Distance 震央距離 (km)", fontsize=12)
+    ax.set_ylabel("Travel Time 走時 (sec)", fontsize=12)
+    ax.legend(loc='upper left')
+    ax.grid(True, linestyle='--', alpha=0.7)
+    
+    # 設定範圍
+    ax.set_xlim(0, max(500, distance + 100))
+    ax.set_ylim(0, max(120, t_s + 20))
+    
+    return f"{t_p:.2f} 秒", f"{t_s:.2f} 秒", f"{t_diff:.2f} 秒", fig
+
+# 建立介面
+with gr.Blocks(theme=gr.themes.Soft()) as demo:
+    gr.Markdown("### 🛠 地震波走時參數設定")
+    
+    with gr.Row():
+        with gr.Column():
+            dist_input = gr.Slider(minimum=0, maximum=1000, value=100, step=1, label="震央距離 (km)")
+            depth_input = gr.Slider(minimum=0, maximum=200, value=10, step=1, label="震源深度 (km)")
+            vp_input = gr.Slider(minimum=3.0, maximum=8.0, value=6.0, step=0.1, label="P波波速 (km/s)")
+            vs_input = gr.Slider(minimum=1.5, maximum=5.0, value=3.5, step=0.1, label="S波波速 (km/s)")
+            
+            btn = gr.Button("開始計算", variant="primary")
+            
+        with gr.Column():
+            with gr.Group():
+                out_p = gr.Textbox(label="P波抵達時間 (Tp)")
+                out_s = gr.Textbox(label="S波抵達時間 (Ts)")
+                out_diff = gr.Textbox(label="S-P 時間差 (Ts - Tp)")
+    
+    gr.Markdown("### 📈 可視化分析")
+    plot_output = gr.Plot(label="走時曲線圖表")
+
+    btn.click(
+        fn=calculate_travel_time, 
+        inputs=[dist_input, vp_input, vs_input, depth_input], 
+        outputs=[out_p, out_s, out_diff, plot_output]
+    )
+    
+    # 初始化
+    demo.load(
+        fn=calculate_travel_time, 
+        inputs=[dist_input, vp_input, vs_input, depth_input], 
+        outputs=[out_p, out_s, out_diff, plot_output]
+    )
+
+demo.launch()
+        </gradio-file>
+    </gradio-lite>
+
+</body>
+</html>
+"""
+
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
