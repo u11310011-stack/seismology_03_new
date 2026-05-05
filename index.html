@@ -1,135 +1,333 @@
-import pandas as pd
-from datetime import datetime
-
-# 為了產生檔案，我將執行 Python 代碼來生成 HTML 內容
-html_content = """<!   DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>地震學實驗室 - Seismology Tool</title>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@gradio/lite/dist/index.js"></script>
+    <title>地震學第三章：地球構造與震波傳播</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body {
-            background-color: #f0f2f5;
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
+            scroll-behavior: smooth;
         }
-        #gradio-app {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+        
+        .lesson-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
         }
-        .header {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        .lesson-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #3b82f6;
         }
-        .header h1 { margin: 0; font-size: 24px; }
-        .header p { margin: 5px 0 0; opacity: 0.9; font-size: 14px; }
+        
+        .nav-link.active {
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            border-right: 3px solid #1d4ed8;
+            font-weight: 600;
+        }
+
+        /* 自訂滾動條保持版面美觀 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
     </style>
 </head>
-<body>
+<body class="min-h-screen text-slate-800 flex flex-col relative">
 
-    <div class="header">
-        <h1>地震學計算工具 (Seismology Tool)</h1>
-        <p>基於 P 波與 S 波走時曲線之交互式教學網頁</p>
+    <!-- 頂部導航列 -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-3">
+            <i data-lucide="book-open" class="w-8 h-8 text-blue-600"></i>
+            <div>
+                <h1 class="text-2xl font-bold text-slate-800 tracking-tight">地震學第三章：地球構造與震波傳播</h1>
+                <p class="text-sm text-slate-500 font-medium">大師的精華課堂 ── 核心概念與生活類比</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- 內容區塊 -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col lg:flex-row gap-8 w-full">
+        
+        <!-- 左側導航 (Sidebar) -->
+        <aside class="lg:w-1/4 flex-shrink-0 hidden lg:block">
+            <div class="sticky top-28 bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 px-3 flex items-center gap-2">
+                    <i data-lucide="list" class="w-4 h-4"></i> 課程章節
+                </h3>
+                <nav class="flex flex-col space-y-1" id="toc">
+                    <a href="#lesson-3-1" class="nav-link px-3 py-2 text-sm text-slate-600 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2 active">
+                        <span class="w-8 text-center font-bold text-slate-400">3.1</span> 導論
+                    </a>
+                    <a href="#lesson-3-2" class="nav-link px-3 py-2 text-sm text-slate-600 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2">
+                        <span class="w-8 text-center font-bold text-slate-400">3.2</span> 折射地震學
+                    </a>
+                    <a href="#lesson-3-3" class="nav-link px-3 py-2 text-sm text-slate-600 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2">
+                        <span class="w-8 text-center font-bold text-slate-400">3.3</span> 反射地震學
+                    </a>
+                    <a href="#lesson-3-4" class="nav-link px-3 py-2 text-sm text-slate-600 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2">
+                        <span class="w-8 text-center font-bold text-slate-400">3.4</span> 球面地球中的地震波
+                    </a>
+                    <a href="#lesson-3-5" class="nav-link px-3 py-2 text-sm text-slate-600 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2">
+                        <span class="w-8 text-center font-bold text-slate-400">3.5</span> 體波走時研究
+                    </a>
+                    <a href="#lesson-3-6" class="nav-link px-3 py-2 text-sm text-slate-600 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2">
+                        <span class="w-8 text-center font-bold text-slate-400">3.6</span> 地球各向異性構造
+                    </a>
+                    <a href="#lesson-3-7" class="nav-link px-3 py-2 text-sm text-slate-600 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2">
+                        <span class="w-8 text-center font-bold text-slate-400">3.7</span> 衰減與不彈性
+                    </a>
+                    <a href="#lesson-3-8" class="nav-link px-3 py-2 text-sm text-slate-600 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2">
+                        <span class="w-8 text-center font-bold text-slate-400">3.8</span> 地函與地核的成分
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- 右側主要課程內容 -->
+        <main class="lg:w-3/4 space-y-8 pb-32">
+            
+            <!-- 3.1 導論 -->
+            <section id="lesson-3-1" class="lesson-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 scroll-mt-28">
+                <header class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                    <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="info" class="w-6 h-6"></i></div>
+                    <h2 class="text-2xl font-bold text-slate-800">3.1 導論 (Introduction)</h2>
+                </header>
+                <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4">
+                    <p>本單元確立了地震學的核心目標：<strong>測定地球內部的地震速度分布</strong>，進而推論彈性性質、礦物組成、化學成分及熱狀態。</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>相對於重力或磁力數據，地震學數據具有<strong>極高的解析力</strong>。</li>
+                        <li>能精確標定如「核函交界 (CMB)」的深度，及其兩側物理性質的劇烈變化。</li>
+                    </ul>
+                </div>
+                <div class="mt-6 bg-orange-50 border border-orange-100 rounded-xl p-5 relative overflow-hidden">
+                    <i data-lucide="lightbulb" class="absolute right-4 top-4 w-24 h-24 text-orange-500 opacity-10"></i>
+                    <h4 class="font-bold text-orange-700 flex items-center gap-2 mb-2"><i data-lucide="sparkles" class="w-5 h-5"></i> 大師的生活類比</h4>
+                    <p class="text-sm text-orange-800 leading-relaxed relative z-10">
+                        如果想知道一個神秘箱子裡裝什麼，用「重力與磁力」探勘就像是幫箱子<strong>秤體重和測磁性</strong>，只能猜個大概；而「地震波」就像是帶地球去照<strong>超音波</strong>！它能精確看見哪裡是液體、哪裡是固體，連器官（地核）的邊界都看得一清二楚。
+                    </p>
+                </div>
+            </section>
+
+            <!-- 3.2 折射地震學 -->
+            <section id="lesson-3-2" class="lesson-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 scroll-mt-28">
+                <header class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                    <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="waves" class="w-6 h-6"></i></div>
+                    <h2 class="text-2xl font-bold text-slate-800">3.2 折射地震學 (Refraction Seismology)</h2>
+                </header>
+                <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4">
+                    <p>此單元介紹了測定地下深處速度的最簡單方法，將地球視為平坦且波速均勻的層狀模型。</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>平層法：</strong> 透過分析直接波、反射波與頭波 (Head wave) 的走時曲線，反推地層的速度與厚度。</li>
+                        <li><strong>莫氏不連續面 (Moho)：</strong> 1909 年莫氏透過觀測到兩組不同的 P 波（Pg 和 Pn），發現了地殼與地函的邊界。</li>
+                        <li><strong>傾斜界面：</strong> 當界面不水平時，需使用逆向測線 (Reversed profile) 來修正視速度，求得真實傾角與深度。</li>
+                        <li><strong>波長與解析度：</strong> 地震波只能「看見」大於其波長的構造，解析度取決於觀測頻率。</li>
+                    </ul>
+                </div>
+                <div class="mt-6 bg-orange-50 border border-orange-100 rounded-xl p-5 relative overflow-hidden">
+                    <i data-lucide="lightbulb" class="absolute right-4 top-4 w-24 h-24 text-orange-500 opacity-10"></i>
+                    <h4 class="font-bold text-orange-700 flex items-center gap-2 mb-2"><i data-lucide="sparkles" class="w-5 h-5"></i> 大師的生活類比</h4>
+                    <p class="text-sm text-orange-800 leading-relaxed relative z-10">
+                        <strong>折射與頭波：</strong> 想像你在沙灘上跑步（波速慢），然後斜斜跑上堅硬的柏油路（波速快）。踩上柏油路的那一刻你的速度變快了，這使得你的方向發生偏折，這就是折射。<br>
+                        <strong>波長解析度：</strong> 波長就像探測地形的「腳掌大小」。如果你的腳掌非常巨大（波長長、低頻率），你踩過去根本感覺不到地上的小裂縫（無法解析細微構造）！
+                    </p>
+                </div>
+            </section>
+
+            <!-- 3.3 反射地震學 -->
+            <section id="lesson-3-3" class="lesson-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 scroll-mt-28">
+                <header class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                    <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="radar" class="w-6 h-6"></i></div>
+                    <h2 class="text-2xl font-bold text-slate-800">3.3 反射地震學 (Reflection Seismology)</h2>
+                </header>
+                <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4">
+                    <p>這是地殼精細構造探測與石油天然氣勘探最常用的高解析度方法。</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>走時曲線與 Dix 方程式：</strong> 反射波走時呈雙曲線。可利用各層的均方根 (rms) 速度求得每一層的層速度 (Interval velocity)。</li>
+                        <li><strong>共同中點 (CMP) 疊加：</strong> 透過將相同中點的紀錄進行 NMO (正常時差) 修正後相加，能大幅增強反射訊號並消除雜訊。</li>
+                        <li><strong>訊號處理：</strong> 包含靜態修正、去捲積 (提升時間解析度) 及 f-k 過濾等分離技術。</li>
+                        <li><strong>遷移 (Migration)：</strong> 消除衍射偽像（如「蝴蝶結」狀構造），將反射面歸位到真實地理位置。</li>
+                    </ul>
+                </div>
+                <div class="mt-6 bg-orange-50 border border-orange-100 rounded-xl p-5 relative overflow-hidden">
+                    <i data-lucide="lightbulb" class="absolute right-4 top-4 w-24 h-24 text-orange-500 opacity-10"></i>
+                    <h4 class="font-bold text-orange-700 flex items-center gap-2 mb-2"><i data-lucide="sparkles" class="w-5 h-5"></i> 大師的生活類比</h4>
+                    <p class="text-sm text-orange-800 leading-relaxed relative z-10">
+                        如果你在複雜的大峽谷大喊，會聽到四面八方傳來雜亂的「回音」。<br>
+                        <strong>CMP 疊加</strong> 就像是放了幾十個麥克風一起錄音，然後把雜音抵銷，只留下最清楚的主旋律。<br>
+                        <strong>遷移 (Migration)</strong> 則像是幫地震資料戴上「矯正眼鏡」，把因為凹凸不平而變形的「蝴蝶結狀雜訊」，重新還原成真正筆直的地下斷層面！
+                    </p>
+                </div>
+            </section>
+
+            <!-- 3.4 球面地球中的地震波 -->
+            <section id="lesson-3-4" class="lesson-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 scroll-mt-28">
+                <header class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                    <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="aperture" class="w-6 h-6"></i></div>
+                    <h2 class="text-2xl font-bold text-slate-800">3.4 球面地球中的地震波 (Spherical Earth)</h2>
+                </header>
+                <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4">
+                    <p>當觀測距離增加時，必須考慮地球的球面幾何與深度造成的速度變化。</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>射線參數 (p)：</strong> 在球形模型中定義為 <code>p = (r sin i) / v</code>，這在射線路徑中是一個常數。</li>
+                        <li><strong>速度劇烈增加：</strong> 會產生<strong>三支波 (Triplication)</strong> 現象，即同一個距離會先後觀測到三個到達波。</li>
+                        <li><strong>低速帶 (LVZ)：</strong> 速度反常下降會導致波路徑大幅彎折，在地表形成觀測不到直接射線的<strong>陰影帶 (Shadow zone)</strong>。</li>
+                        <li><strong>反演：</strong> 使用 Herglotz-Wiechert 積分，直接由走時曲線推算地球深度的速度分布。</li>
+                    </ul>
+                </div>
+                <div class="mt-6 bg-orange-50 border border-orange-100 rounded-xl p-5 relative overflow-hidden">
+                    <i data-lucide="lightbulb" class="absolute right-4 top-4 w-24 h-24 text-orange-500 opacity-10"></i>
+                    <h4 class="font-bold text-orange-700 flex items-center gap-2 mb-2"><i data-lucide="sparkles" class="w-5 h-5"></i> 大師的生活類比</h4>
+                    <p class="text-sm text-orange-800 leading-relaxed relative z-10">
+                        想像地球是一顆「越靠近中心越硬」的巨大果凍。光線在果凍中穿梭時，會被內部堅硬（高波速）的地方「排斥」，導致射線呈現一個美麗的「U型彎曲」回到地表。<br>
+                        如果果凍中間突然有一層特別軟（低速帶），光線就會在那裡發生大轉彎，導致地表某個區域完全陷入「黑暗（陰影帶）」，什麼訊號都收不到！
+                    </p>
+                </div>
+            </section>
+
+            <!-- 3.5 體波走時研究 -->
+            <section id="lesson-3-5" class="lesson-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 scroll-mt-28">
+                <header class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                    <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="globe-2" class="w-6 h-6"></i></div>
+                    <h2 class="text-2xl font-bold text-slate-800">3.5 體波走時研究 (Body Wave Travel Time)</h2>
+                </header>
+                <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4">
+                    <p>將理論應用於全球尺度，建立了地球內部的基本分層模型（如 Jeffreys-Bullen 與 IASP91 模型）。</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>相命名：</strong> 根據經過的路徑給予字母標籤，如 P、S、K（外核）、I（內核）、c（核函界面反射）、i（內外核界面反射）。</li>
+                        <li><strong>核心相 (Core phases)：</strong> 液態外核導致了著名的 <strong>P 波陰影帶 (98° 至 145°)</strong>，而 PKP、PKIKP 等核心波則揭示了內核的存在。</li>
+                        <li><strong>地函構造：</strong> 410 與 660 公里的不連續面產生明顯三支波。地函底部的 D" 區域是個複雜的熱邊界層。</li>
+                    </ul>
+                </div>
+                <div class="mt-6 bg-orange-50 border border-orange-100 rounded-xl p-5 relative overflow-hidden">
+                    <i data-lucide="lightbulb" class="absolute right-4 top-4 w-24 h-24 text-orange-500 opacity-10"></i>
+                    <h4 class="font-bold text-orange-700 flex items-center gap-2 mb-2"><i data-lucide="sparkles" class="w-5 h-5"></i> 大師的生活類比</h4>
+                    <p class="text-sm text-orange-800 leading-relaxed relative z-10">
+                        這些英文字母（P, S, K, c）就像是地震波的<strong>「旅行轉運標籤」</strong>！<br>
+                        P 和 S 是一般的陸運；K 代表包裹經過了海運（液態外核）；c 代表包裹撞到牆壁被退件（反射）。只要看一眼標籤（例如 PKIKP），地震學家就知道這個包裹穿越了整個地球的核心再回到地表，經歷了一場偉大的旅程！
+                    </p>
+                </div>
+            </section>
+
+            <!-- 3.6 地球各向異性構造 -->
+            <section id="lesson-3-6" class="lesson-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 scroll-mt-28">
+                <header class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                    <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="compass" class="w-6 h-6"></i></div>
+                    <h2 class="text-2xl font-bold text-slate-800">3.6 地球各向異性構造 (Anisotropic Structure)</h2>
+                </header>
+                <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4">
+                    <p>探討地震波速「隨方向改變」的物理現象（各向異性）。</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>成因：</strong> 包括物質層狀堆疊產生的 SPO，以及礦物（如橄欖石）受地函對流應力排列產生的 LPO。</li>
+                        <li><strong>剪力波分裂 (Shear Wave Splitting)：</strong> 當剪力波進入各向異性介質時，會分裂為快、慢兩個不同時間到達的脈衝。</li>
+                        <li><strong>區域應用：</strong> 上部地函的各向異性與板塊運動方向高度相關；地函底部 D" 層與內核（鐵晶體軸向排列）也有明顯各向異性。</li>
+                    </ul>
+                </div>
+                <div class="mt-6 bg-orange-50 border border-orange-100 rounded-xl p-5 relative overflow-hidden">
+                    <i data-lucide="lightbulb" class="absolute right-4 top-4 w-24 h-24 text-orange-500 opacity-10"></i>
+                    <h4 class="font-bold text-orange-700 flex items-center gap-2 mb-2"><i data-lucide="sparkles" class="w-5 h-5"></i> 大師的生活類比</h4>
+                    <p class="text-sm text-orange-800 leading-relaxed relative z-10">
+                        這就像是在<strong>「劈木柴」</strong>！<br>
+                        如果你順著木頭的天然紋理劈下去，斧頭很容易穿過（波速快）；如果你橫向垂直紋理劈，就會非常困難（波速慢）。當一個 S 波跑進帶有紋理的岩層裡，它就會被木紋「撕裂」成一快一慢兩個波，我們稱之為剪力波分裂！
+                    </p>
+                </div>
+            </section>
+
+            <!-- 3.7 衰減與不彈性 -->
+            <section id="lesson-3-7" class="lesson-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 scroll-mt-28">
+                <header class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                    <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="trending-down" class="w-6 h-6"></i></div>
+                    <h2 class="text-2xl font-bold text-slate-800">3.7 衰減與不彈性 (Attenuation & Anelasticity)</h2>
+                </header>
+                <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4">
+                    <p>研究地震波能量在傳播過程中是如何損耗的。</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>能量損耗過程：</strong> 包含彈性過程（幾何擴散、散射、多路徑）以及非彈性過程（本徵衰減，將機械能轉化為熱能）。</li>
+                        <li><strong>品質因子 (Q)：</strong> 描述介質衰減程度的指標。Q 值越小，表示衰減越強烈。</li>
+                        <li><strong>物理色散：</strong> 伴隨衰減而生，為了維持因果律，不同頻率的波會以微小差異的速度傳播。</li>
+                        <li><strong>Q 的分布：</strong> 衰減最強（低 Q）的區域通常在淺層地殼（因含有流體）以及軟流圈（因處於高溫部分熔融狀態）。</li>
+                    </ul>
+                </div>
+                <div class="mt-6 bg-orange-50 border border-orange-100 rounded-xl p-5 relative overflow-hidden">
+                    <i data-lucide="lightbulb" class="absolute right-4 top-4 w-24 h-24 text-orange-500 opacity-10"></i>
+                    <h4 class="font-bold text-orange-700 flex items-center gap-2 mb-2"><i data-lucide="sparkles" class="w-5 h-5"></i> 大師的生活類比</h4>
+                    <p class="text-sm text-orange-800 leading-relaxed relative z-10">
+                        想像你用力敲擊一個大銅鐘，聲音會慢慢消失。一部分是因為聲音散開了（幾何擴散）；另一部分是因為金屬內部原子摩擦，把聲音的能量變成了<strong>微小的熱能</strong>（本徵衰減）。<br>
+                        Q 值就像是地球的「避震器」！遇到高溫的軟流圈（Q 值很小），震動能量很快就被這層天然避震器給吸收轉化掉了。
+                    </p>
+                </div>
+            </section>
+
+            <!-- 3.8 地函與地核的成分 -->
+            <section id="lesson-3-8" class="lesson-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 scroll-mt-28">
+                <header class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                    <div class="bg-blue-100 text-blue-600 p-3 rounded-xl"><i data-lucide="layers" class="w-6 h-6"></i></div>
+                    <h2 class="text-2xl font-bold text-slate-800">3.8 地函與地核的成分 (Composition)</h2>
+                </header>
+                <div class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4">
+                    <p>結合地震學走時資料、密度運算與高壓實驗，建立地球深部的成分與礦物模型。</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>密度模型：</strong> 利用 Adams-Williamson 方程式與地球轉動慣量來約束地球內部的密度分布。</li>
+                        <li><strong>地函成分：</strong> 以橄欖岩 (Pyrolite) 模型為主。410、520 與 660 公里的界線，正是橄欖石相變為瓦茲利石、林伍德石及鈣鈦礦的深度。</li>
+                        <li><strong>地核成分：</strong> 主要為鐵鎳合金。由於純鐵密度高於觀測值，推測外核混有少量輕元素（如硫、矽、氧）。</li>
+                    </ul>
+                </div>
+                <div class="mt-6 bg-orange-50 border border-orange-100 rounded-xl p-5 relative overflow-hidden">
+                    <i data-lucide="lightbulb" class="absolute right-4 top-4 w-24 h-24 text-orange-500 opacity-10"></i>
+                    <h4 class="font-bold text-orange-700 flex items-center gap-2 mb-2"><i data-lucide="sparkles" class="w-5 h-5"></i> 大師的生活類比</h4>
+                    <p class="text-sm text-orange-800 leading-relaxed relative z-10">
+                        地球就像是一杯巨大的<strong>「漸層調酒」</strong>！<br>
+                        上層的地函充滿了橄欖石，但隨著深度往下（壓力變大），同樣的成分硬生生被擠壓成了結構更緊密的形狀（這就是 410 和 660 公里的界面）。而最底下的地核，則像是在純鐵汁裡加了一點輕巧的「調味料」（硫和氧），讓它的密度比純鐵稍微輕了一點點。
+                    </p>
+                </div>
+            </section>
+
+        </main>
     </div>
 
-    <gradio-lite>
-        <gradio-requirements>
-            numpy
-            matplotlib
-        </gradio-requirements>
-
-        <gradio-file name="app.py" entrypoint>
-import gradio as gr
-import numpy as np
-import matplotlib.pyplot as plt
-
-def calculate_travel_time(distance, v_p, v_s, depth):
-    # 簡單的走時計算模型 (考量震源深度)
-    # 斜距 (Slant distance)
-    slant_dist = np.sqrt(distance**2 + depth**2)
-    
-    t_p = slant_dist / v_p
-    t_s = slant_dist / v_s
-    t_diff = t_s - t_p
-    
-    # 繪圖
-    fig, ax = plt.subplots(figsize=(10, 6), dpi=100)
-    
-    # 設定距離範圍繪製參考線
-    distances = np.linspace(0, max(500, distance + 100), 500)
-    curve_p = np.sqrt(distances**2 + depth**2) / v_p
-    curve_s = np.sqrt(distances**2 + depth**2) / v_s
-    
-    ax.plot(distances, curve_p, label='P-wave', color='#ef4444', linewidth=2)
-    ax.plot(distances, curve_s, label='S-wave', color='#3b82f6', linewidth=2)
-    
-    # 標記目前點
-    ax.scatter([distance], [t_p], color='red', zorder=5)
-    ax.scatter([distance], [t_s], color='blue', zorder=5)
-    
-    # 標記 S-P 差值
-    ax.vlines(distance, t_p, t_s, colors='green', linestyles='dashed', label=f'S-P interval: {t_diff:.2f}s')
-    
-    ax.set_title("Travel Time Curves (走時曲線圖)", fontsize=14, fontweight='bold')
-    ax.set_xlabel("Epicentral Distance 震央距離 (km)", fontsize=12)
-    ax.set_ylabel("Travel Time 走時 (sec)", fontsize=12)
-    ax.legend(loc='upper left')
-    ax.grid(True, linestyle='--', alpha=0.7)
-    
-    # 設定範圍
-    ax.set_xlim(0, max(500, distance + 100))
-    ax.set_ylim(0, max(120, t_s + 20))
-    
-    return f"{t_p:.2f} 秒", f"{t_s:.2f} 秒", f"{t_diff:.2f} 秒", fig
-
-# 建立介面
-with gr.Blocks(theme=gr.themes.Soft()) as demo:
-    gr.Markdown("### 🛠 地震波走時參數設定")
-    
-    with gr.Row():
-        with gr.Column():
-            dist_input = gr.Slider(minimum=0, maximum=1000, value=100, step=1, label="震央距離 (km)")
-            depth_input = gr.Slider(minimum=0, maximum=200, value=10, step=1, label="震源深度 (km)")
-            vp_input = gr.Slider(minimum=3.0, maximum=8.0, value=6.0, step=0.1, label="P波波速 (km/s)")
-            vs_input = gr.Slider(minimum=1.5, maximum=5.0, value=3.5, step=0.1, label="S波波速 (km/s)")
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 初始化圖示
+            lucide.createIcons();
             
-            btn = gr.Button("開始計算", variant="primary")
+            // 監聽滾動以更新左側導航列的亮點狀態
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
             
-        with gr.Column():
-            with gr.Group():
-                out_p = gr.Textbox(label="P波抵達時間 (Tp)")
-                out_s = gr.Textbox(label="S波抵達時間 (Ts)")
-                out_diff = gr.Textbox(label="S-P 時間差 (Ts - Tp)")
-    
-    gr.Markdown("### 📈 可視化分析")
-    plot_output = gr.Plot(label="走時曲線圖表")
-
-    btn.click(
-        fn=calculate_travel_time, 
-        inputs=[dist_input, vp_input, vs_input, depth_input], 
-        outputs=[out_p, out_s, out_diff, plot_output]
-    )
-    
-    # 初始化
-    demo.load(
-        fn=calculate_travel_time, 
-        inputs=[dist_input, vp_input, vs_input, depth_input], 
-        outputs=[out_p, out_s, out_diff, plot_output]
-    )
-
-demo.launch()
-        </gradio-file>
-    </gradio-lite>
-
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    // 當區塊頂部到達視窗上方約 200px 處時觸發
+                    if (scrollY >= sectionTop - 200) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
-"""
-
-with open("index.html", "w", encoding="utf-8") as f:
-    f.write(html_content)
